@@ -14,7 +14,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <java.version>11</java.version>
-        <kotlin.version>1.7.22</kotlin.version>
+        <kotlin.version>1.8.22</kotlin.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>2.17.2</log4j.version>
         <spring.version>5.3.31</spring.version>
@@ -42,6 +42,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-common</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk7</artifactId>
                 <version>${kotlin.version}</version>
             </dependency>
@@ -62,9 +67,10 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlinx</groupId>
-                <artifactId>kotlinx-coroutines-core</artifactId>
-                <version>1.4.3</version>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- Mockito -->
