@@ -73,12 +73,6 @@
             <version>3.4.5</version>
         </dependency>
 
-        <!-- JCache -->
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
-
         <!-- Ignite -->
         <dependency>
             <groupId>org.apache.ignite</groupId>
