@@ -14,7 +14,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <java.version>1.8</java.version>
-        <kotlin.version>1.9.25</kotlin.version>
+        <kotlin.version>2.0.21</kotlin.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>2.17.2</log4j.version>
         <spring.version>5.3.39</spring.version>
@@ -76,7 +76,7 @@
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>
                 <artifactId>mockito-kotlin</artifactId>
-                <version>3.2.0</version>
+                <version>4.1.0</version>
             </dependency>
 
             <!-- Log4j -->
@@ -147,27 +147,12 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- Reactor -->
-            <!--
-                        <dependency>
-                            <groupId>io.projectreactor</groupId>
-                            <artifactId>reactor-core</artifactId>
-                            <version>3.3.12.RELEASE</version>
-                        </dependency>
-            -->
 
             <!-- Gson -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>2.8.9</version>
-            </dependency>
-
-            <!-- Jetty -->
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-webapp</artifactId>
-                <version>${jetty.version}</version>
             </dependency>
 
             <!-- Jackson -->
