@@ -44,6 +44,8 @@ class JournalManager(private val journalDao: JournalDao) {
 
     fun load() {
 
+        journalDao.createTableIfItDoesNotExist()
+
         val journals = journalDao.findByState(JournalState.ACCEPTED.value)
 
         if (journals.isNotEmpty()) {

@@ -7,8 +7,10 @@
     </Appenders>
     <Loggers>
         <Logger name="org.springframework" level="INFO"/>
-        <Logger name="org.springframework.jdbc" level="TRACE"/>
+        <Logger name="org.springframework.jdbc" level="INFO"/>
         <Logger name="org.apache.ignite" level="INFO"/>
+        <Logger name="io.netty" level="INFO"/>
+        <Logger name="com.zaxxer.hikari" level="INFO"/>
 
         <Logger name="com.kaizensundays" level="ALL"/>
 

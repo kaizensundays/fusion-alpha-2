@@ -32,8 +32,7 @@ abstract class NodeStateAwareWebSocketHandler : WebSocketHandler, NodeStateListe
 
     protected fun removeSession(session: WebSocketSession) {
         sessionMap.remove(session.id)
-        val closed = !session.isOpen
-        logger.info("Session ${session.id} is removed and closed ($closed)")
+        logger.info("Session ${session.id} is removed and closed")
     }
 
     fun closeSession(session: WebSocketSession) {
