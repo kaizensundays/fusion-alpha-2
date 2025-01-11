@@ -9,6 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import reactor.core.publisher.Flux
 import java.time.Duration
@@ -21,6 +22,7 @@ import kotlin.test.assertNotNull
  *
  * @author Sergey Chuykov
  */
+@ActiveProfiles("test")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = [ServiceContext::class])
 class IgniteCacheStoreIntegrationTest : MuTestSupport() {
@@ -48,6 +50,10 @@ class IgniteCacheStoreIntegrationTest : MuTestSupport() {
 
         requests.mergeValues().forEach { request -> request.uuid = UUID.randomUUID().toString() }
 
+    }
+
+    //@Test
+    fun test() {
     }
 
     @Test

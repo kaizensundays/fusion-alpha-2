@@ -45,6 +45,14 @@ class JournalDao(private val jdbc: NamedParameterJdbcTemplate) : RowMapper<Journ
         )
     }
 
+    fun createTableIfItDoesNotExist(): Boolean {
+        val existed = tableExist("journal")
+        if (!existed) {
+            createTable()
+        }
+        return existed
+    }
+
     fun findById(id: Long): Journal? {
         return jdbc.queryForObject("select * from journal where id=:id", mapOf("id" to id), this)
     }

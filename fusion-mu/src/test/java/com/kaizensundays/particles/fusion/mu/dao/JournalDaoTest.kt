@@ -3,6 +3,7 @@ package com.kaizensundays.particles.fusion.mu.dao
 import com.kaizensundays.particles.fusion.mu.JournalContext
 import com.kaizensundays.particles.fusion.mu.messages.Journal
 import com.kaizensundays.particles.fusion.mu.messages.JournalState
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,15 +52,18 @@ class JournalDaoTest {
     fun before() {
         df.timeZone = TimeZone.getTimeZone("America/New_York")
 
-        val exist = dao.tableExist("journal")
-        if (exist) {
+        val existed = dao.createTableIfItDoesNotExist()
+        if (existed) {
             dao.truncate()
-        } else {
-            dao.createTable()
         }
     }
 
-    //@Test
+    @After
+    fun after() {
+        dao.truncate()
+    }
+
+    @Test
     fun insert() {
 
         journals.forEach { journal -> dao.insert(journal) }
