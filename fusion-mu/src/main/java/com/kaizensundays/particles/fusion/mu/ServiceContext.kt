@@ -67,6 +67,11 @@ open class ServiceContext {
     }
 
     @Bean
+    open fun resultsCache(ignite: Ignite): IgniteCache<String, String> {
+        return ignite.getOrCreateCache(CacheName.Results)
+    }
+
+    @Bean
     open fun findFlightHandler(requestsCache: IgniteCache<String, FindFlight>): FindFlightHandler {
         return FindFlightHandler(requestsCache)
     }
@@ -127,11 +132,11 @@ open class ServiceContext {
 
     @Bean
     open fun defaultRestController(
-        requestsCache: IgniteCache<String, FindFlight>,
+        resultsCache: IgniteCache<String, String>,
         defaultEventRoute: DefaultEventRoute,
         journalManager: JournalManager
     ): DefaultRestController {
-        return DefaultRestController(requestsCache, defaultEventRoute, journalManager)
+        return DefaultRestController(resultsCache, defaultEventRoute, journalManager)
     }
 
 }

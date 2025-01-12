@@ -1,7 +1,6 @@
 package com.kaizensundays.particles.fusion.mu
 
 import com.kaizensundays.particles.fusion.mu.messages.AddAirline
-import com.kaizensundays.particles.fusion.mu.messages.FindFlight
 import com.kaizensundays.particles.fusion.mu.messages.JournalFormatted
 import org.apache.ignite.IgniteCache
 import org.slf4j.Logger
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class DefaultRestController(
-    private val requestsCache: IgniteCache<String, FindFlight>,
+    private val resultsCache: IgniteCache<String, String>,
     private val eventRoute: DefaultEventRoute,
     private val journalManager: JournalManager
 ) {
@@ -43,15 +42,26 @@ class DefaultRestController(
         return "Ok"
     }
 
-    @GetMapping("/get/request/{key}")
-    fun getRequest(@PathVariable("key") key: String): FindFlight? {
+    @GetMapping("/get/result/{key}")
+    fun getResult(@PathVariable("key") key: String): String {
         logger.info("key={}", key)
         try {
-            return requestsCache[key]
+            return resultsCache[key]
         } catch (e: Exception) {
             logger.error("", e)
         }
-        return null
+        return "?"
+    }
+
+    @GetMapping("/put/result/{key}/{value}")
+    fun getResult(@PathVariable("key") key: String, @PathVariable("value") value: String): String {
+        logger.info("key={} value={}", key, value)
+        try {
+            resultsCache.put(key, value)
+        } catch (e: Exception) {
+            logger.error("No Quorum: " + e.message)
+        }
+        return "Ok"
     }
 
     @GetMapping("/journal/findAll")

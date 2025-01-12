@@ -54,6 +54,7 @@ open class IgniteContext {
                     .setWriteThrough(true),
                 CacheConfiguration<String, String>()
                     .setName(CacheName.Results)
+                    .setTopologyValidator(topologyValidator)
                     .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration(TimeUnit.DAYS, 1))),
             )
             .setIncludeEventTypes(

@@ -12,20 +12,28 @@ import org.slf4j.LoggerFactory
  */
 class DefaultTopologyValidator : TopologyValidator {
 
-    private val logger: Logger = LoggerFactory.getLogger(javaClass)
+    companion object {
+        val logger: Logger = LoggerFactory.getLogger(DefaultTopologyValidator::class.java)
+    }
 
     override fun validate(nodes: MutableCollection<ClusterNode>): Boolean {
 
-        logger.info("nodes={}", nodes)
+        var quorum = 1000
+        var votes = 0
 
         nodes.forEach { node ->
             val clusterQuorum = node.attribute<String>("cluster.quorum")?.toInt() ?: 0
+            quorum = clusterQuorum
             val clusterVotes = node.attribute<String>("cluster.votes")?.toInt() ?: 0
+            votes += clusterVotes
             val id = node.id().toString()
-            logger.info("nodeId={} clusterQuorum={} clusterVotes={}", id, clusterQuorum, clusterVotes)
+            logger.info("nodeId=$id clusterQuorum=$clusterQuorum clusterVotes=$clusterVotes")
         }
 
-        return true
+        val isQuorum = votes >= quorum
+        logger.info("isQuorum=$isQuorum")
+
+        return isQuorum
     }
 
 }
