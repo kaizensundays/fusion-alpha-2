@@ -9,6 +9,7 @@ import com.kaizensundays.particles.fusion.mu.messages.FindFlight
 import com.kaizensundays.particles.fusion.mu.messages.Journal
 import com.zaxxer.hikari.HikariDataSource
 import org.apache.ignite.Ignite
+import org.apache.ignite.IgniteCache
 import org.apache.ignite.events.EventType
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -61,8 +62,13 @@ open class ServiceContext {
     }
 
     @Bean
-    open fun findFlightHandler(ignite: Ignite): FindFlightHandler {
-        return FindFlightHandler(ignite.getOrCreateCache(CacheName.Requests))
+    open fun requestsCache(ignite: Ignite): IgniteCache<String, FindFlight> {
+        return ignite.getOrCreateCache(CacheName.Requests)
+    }
+
+    @Bean
+    open fun findFlightHandler(requestsCache: IgniteCache<String, FindFlight>): FindFlightHandler {
+        return FindFlightHandler(requestsCache)
     }
 
     @Bean
@@ -120,8 +126,12 @@ open class ServiceContext {
     }
 
     @Bean
-    open fun defaultRestController(defaultEventRoute: DefaultEventRoute, journalManager: JournalManager): DefaultRestController {
-        return DefaultRestController(defaultEventRoute, journalManager)
+    open fun defaultRestController(
+        requestsCache: IgniteCache<String, FindFlight>,
+        defaultEventRoute: DefaultEventRoute,
+        journalManager: JournalManager
+    ): DefaultRestController {
+        return DefaultRestController(requestsCache, defaultEventRoute, journalManager)
     }
 
 }

@@ -19,9 +19,10 @@ class DefaultTopologyValidator : TopologyValidator {
         logger.info("nodes={}", nodes)
 
         nodes.forEach { node ->
-            val votes = node.attribute<String>("fusion-mu.votes")?.toInt() ?:0
+            val clusterQuorum = node.attribute<String>("cluster.quorum")?.toInt() ?: 0
+            val clusterVotes = node.attribute<String>("cluster.votes")?.toInt() ?: 0
             val id = node.id().toString()
-            logger.info("{}:{}", id, votes)
+            logger.info("nodeId={} clusterQuorum={} clusterVotes={}", id, clusterQuorum, clusterVotes)
         }
 
         return true

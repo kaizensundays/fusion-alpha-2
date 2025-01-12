@@ -1,10 +1,13 @@
 package com.kaizensundays.particles.fusion.mu
 
 import com.kaizensundays.particles.fusion.mu.messages.AddAirline
+import com.kaizensundays.particles.fusion.mu.messages.FindFlight
 import com.kaizensundays.particles.fusion.mu.messages.JournalFormatted
+import org.apache.ignite.IgniteCache
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class DefaultRestController(
+    private val requestsCache: IgniteCache<String, FindFlight>,
     private val eventRoute: DefaultEventRoute,
     private val journalManager: JournalManager
 ) {
@@ -37,6 +41,17 @@ class DefaultRestController(
         eventRoute.handle(addAirline)
 
         return "Ok"
+    }
+
+    @GetMapping("/get/request/{key}")
+    fun getRequest(@PathVariable("key") key: String): FindFlight? {
+        logger.info("key={}", key)
+        try {
+            return requestsCache[key]
+        } catch (e: Exception) {
+            logger.error("", e)
+        }
+        return null
     }
 
     @GetMapping("/journal/findAll")
